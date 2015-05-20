@@ -1,10 +1,16 @@
+<div id='game'>
+  <% if @winner %>
+    <div class="alert alert-success"><%=@winner%></div>
+  <% elsif @loser %>
+    <div class="alert alert-error"><%=@loser%></div>
+  <% end %>
 <h1>Blackjack!</h1>
 <p>Welcome <%= session[:player_name] %>!</p>
 
 <% if @play_again %>
 <p>
 <strong>Play again?</strong>
-<a href='/game' class="btn btn-primary">Yes</a>
+<a href='/bet' class="btn btn-primary">Yes</a>
 <a href='/game_over' class="btn"> No</a>
 </p>
 <% end %>
@@ -24,7 +30,7 @@
   Dealer has <%= calculate_total(session[:dealer_cards]) %> and will hit.
   </p>
   <p>
-    <form action="/game/dealer/hit" method="post">
+    <form id="dealer_hit" action="/game/dealer/hit" method="post">
       <input type="submit" class="btn btn-primary" value="Click to see dealer's next card &rarr; ">
     </form>
   </p>
@@ -43,7 +49,8 @@
 
   <p>
   <%= session[:player_name] %> has <%= calculate_total(session[:player_cards]) %>. What would <%= session[:player_name] %> like to do?
-  </p>
+  </p> 
+  <%= session[:player_name] %> has <strong>$<%= session[:player_pot] %></strong> total. Bet amount this round: <strong>$<%= session[:player_bet] %></strong>
   <p>
     <form id="hit_form" action="/game/player/hit" method="post">
       <input type="submit" class="btn btn-success" value="Hit">
@@ -53,4 +60,5 @@
     </form>
   <% end %>
   </p>
+</div>
 </div>
